@@ -1,4 +1,4 @@
-# stock-inventory
+# Stock Tracker
 The purpose of this assignment is to help me understand networks at a lower level.
 
 Things I learned:
