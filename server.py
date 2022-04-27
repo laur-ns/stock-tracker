@@ -177,9 +177,17 @@ def get_stock_data(message):
     header = ("HTTP/1.1 200 OK\r\n\r\n").encode()
     form_input = message.split("/")[1]
     try:
-        # if invalid input, do nothing with the input and continue updating gain/loss
-        body = requests.get(
-            f"https://cloud.iexapis.com/stable/stock/{form_input}/stats?token=sk_b8783e173c464473b9e3a73239e32ba8").json()
+        # take both stock data and chart data for the symbol searched
+        # append both in a single list and return with each data in
+        # their corresponding indices
+        stock_data = []
+        stock_data.append(requests.get(
+            f"https://cloud.iexapis.com/stable/stock/{form_input}/stats?token=sk_b8783e173c464473b9e3a73239e32ba8").json())
+        chart_data = requests.get(
+            f"https://cloud.iexapis.com/stable/stock/{form_input}/chart/5y?chartCloseOnly=true&token=sk_b8783e173c464473b9e3a73239e32ba8").json()
+        body = []
+        body.append(stock_data)
+        body.append(chart_data)
         body = json.dumps(body).encode()
     except:
         header = "HTTP/1.1 404 Not Found\r\n\r\n".encode()
