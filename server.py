@@ -1,12 +1,9 @@
-from pydoc import pager
 from socket import *
 import _thread
-from wsgiref import validate
-import pycurl
-from io import BytesIO
 import json
 import requests
 
+API_KEY = "sk_b8783e173c464473b9e3a73239e32ba8"
 serverSocket = socket(AF_INET, SOCK_STREAM)
 
 serverPort = 8080
@@ -76,7 +73,7 @@ def update_gain_loss():
         for index, symbol in enumerate(data["Stocks"]):
             try:
                 response = requests.get(
-                    f"https://cloud.iexapis.com/stable/stock/{symbol['Name']}/quote?token=sk_b8783e173c464473b9e3a73239e32ba8").json()
+                    f"https://cloud.iexapis.com/stable/stock/{symbol['Name']}/quote?token={API_KEY}").json()
             except:
                 # if it throws an error, it likely means the symbol doesn't exist, so delete it from json file
                 # in reality the server might just be down and it would end up falsely deleting the stock
@@ -182,9 +179,9 @@ def get_stock_data(message):
         # their corresponding indices
         stock_data = []
         stock_data.append(requests.get(
-            f"https://cloud.iexapis.com/stable/stock/{form_input}/stats?token=sk_b8783e173c464473b9e3a73239e32ba8").json())
+            f"https://cloud.iexapis.com/stable/stock/{form_input}/stats?token={API_KEY}").json())
         chart_data = requests.get(
-            f"https://cloud.iexapis.com/stable/stock/{form_input}/chart/5y?chartCloseOnly=true&token=sk_b8783e173c464473b9e3a73239e32ba8").json()
+            f"https://cloud.iexapis.com/stable/stock/{form_input}/chart/5y?chartCloseOnly=true&token={API_KEY}").json()
         body = []
         body.append(stock_data)
         body.append(chart_data)
@@ -222,7 +219,7 @@ def process(connectionSocket):
             elif resource == "research":
                 responseHeader, responseBody = research(message)
             elif "research/" in resource:
-                # send back api data to javascript
+                # get data from api endpoint and send back javascript
                 responseHeader, responseBody = get_stock_data(resource)
             elif resource == "portfolio.js":
                 responseHeader, responseBody = getFile(resource)
