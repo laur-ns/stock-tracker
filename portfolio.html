@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <title>STOCK</title>
+  <style>
+    html {
+      padding: 1rem;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      padding: 5px 25px;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    form {
+      display: grid;
+      width: 30rem;
+      gap: 0.1rem;
+      margin-top: 1rem;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .submit,
+    .reset {
+      margin-top: 0.15rem;
+      height: 2rem;
+      flex-grow: 1;
+    }
+
+    .stock-info {
+      display: flex;
+      margin-top: 1rem;
+      width: 45rem;
+      flex-direction: column;
+      height: 60vh;
+      overflow-y: scroll;
+    }
+
+    .stock-info> :nth-child(odd) {
+      background-color: rgb(240, 240, 240)
+    }
+
+    .stock-info header {
+      display: flex;
+      padding: 0.2rem 0.5rem;
+      font-weight: bold;
+      font-size: 1.3rem;
+      justify-content: space-between;
+      background-color: rgb(240, 240, 240);
+    }
+
+    .stock-info__cell {
+      display: flex;
+      padding: 0.2rem 0.5rem;
+      justify-content: space-between;
+    }
+
+    header span {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .stock-info header>*,
+    .stock-info .stock-info__cell>* {
+      width: 50%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  </style>
+  <script defer src='./portfolio.js'></script>
+</head>
+
+<body>
+  <table>
+    <tr>
+      <th>Stock</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Gain/Loss</th>
+    </tr>
+  </table>
+  <form action='' method='post'>
+    <label for="stocksymbol">Stock symbol:</label>
+    <input type="text" id="stocksymbol" name="stocksymbol" required>
+    <label for="quantity">Quantity:</label>
+    <input type="text" id="quantity" name="quantity" required>
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price" required>
+    <div class='buttons'>
+      <input type="submit" value="Submit" class='submit'>
+      <input type="reset" value="Reset" class='reset'>
+    </div>
+  </form>
+
+  <div class='stock-info'>
+    <header>
+      <div class='stock-info__name-header'>Name <span>(use ctrl + f)</span></div>
+      <div class='stock-info__symbol-header'>Symbol</div>
+    </header>
+  </div>
+
+</body>
+
+</html>

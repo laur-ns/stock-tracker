@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Document</title>
+  <style>
+    html {
+      padding: 1rem;
+    }
+
+    .search {
+      margin-bottom: 1rem;
+    }
+
+    body div {
+      font-weight: 800;
+    }
+
+    body div>span {
+      font-weight: 100;
+    }
+  </style>
+</head>
+
+<body>
+  <div class='search'>
+    <label for="stocksymbol">Stock symbol:</label>
+    <input type="text" id="stocksymbol" name="stocksymbol" required>
+  </div>
+  <div class='symbol'>Symbol: <span></span></div>
+  <div class='companyName'>Company Name: <span></span></div>
+  <div class='peRatio'>PE ratio: <span></span></div>
+  <div class='marketCapitalization'>Market Capitalization: <span></span></div>
+  <div class='weekHigh'>52 week high: <span></span></div>
+  <div class='weekLow'>52 week low: <span></span></div>
+</body>
+
+<script>
+  async function searchSymbol(e) {
+    // sends symbol to server -> server retrieves data from api
+    if (e.key === 'Enter') {
+      const response = await fetch(`./research/${e.target.value}`)
+      if (response.statusText === 'Not Found') {
+        alert("Symbol not found");
+        return;
+      }
+      const stockData = await response.json();
+      const symbol = document.querySelector('.symbol span');
+      const companyName = document.querySelector('.companyName span');
+      const peRatio = document.querySelector('.peRatio span');
+      const marketCapitalization = document.querySelector('.marketCapitalization span');
+      const weekHigh = document.querySelector('.weekHigh span');
+      const weekLow = document.querySelector('.weekLow span');
+
+      symbol.textContent = e.target.value;
+      companyName.textContent = stockData.companyName;
+      peRatio.textContent = stockData.peRatio;
+      marketCapitalization.textContent = stockData.marketCap;
+      weekHigh.textContent = stockData.week52high;
+      weekLow.textContent = stockData.week52low;
+    }
+  }
+  const stockInput = document.querySelector('#stocksymbol');
+  stockInput.addEventListener('keypress', searchSymbol);
+</script>
+
+</html>
