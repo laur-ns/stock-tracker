@@ -2,11 +2,12 @@ from socket import *
 import _thread
 import json
 import requests
+import sys
 
 API_KEY = "sk_b8783e173c464473b9e3a73239e32ba8"
 serverSocket = socket(AF_INET, SOCK_STREAM)
 
-serverPort = 8080
+serverPort = int(sys.argv[1])
 serverSocket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 serverSocket.bind(("", serverPort))
 
