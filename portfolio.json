@@ -1,1 +1,5 @@
-{"Stocks": [{"Name": "TSLA", "Quantity": 168, "Price": 1000, "GainLoss": -11.82}, {"Name": "AAPL", "Quantity": 50, "Price": 150, "GainLoss": 4.35}, {"Name": "AAC", "Quantity": 25, "Price": 59, "GainLoss": -83.32}, {"Name": "AAT", "Quantity": 75, "Price": 328, "GainLoss": -88.66}, {"Name": "TWTR", "Quantity": 73500000, "Price": 54.2, "GainLoss": -10.26}]}
+{
+  "Stocks": [
+    { "Name": "TWTR", "Quantity": 73500000, "Price": 54.2, "GainLoss": -10.66 }
+  ]
+}

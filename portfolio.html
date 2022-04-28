@@ -78,7 +78,6 @@
       text-overflow: ellipsis;
     }
   </style>
-  <script defer src='./portfolio.js'></script>
 </head>
 
 <body>
@@ -96,20 +95,120 @@
     <label for="quantity">Quantity:</label>
     <input type="text" id="quantity" name="quantity" required>
     <label for="price">Price:</label>
-    <input type="text" id="price" name="price" required>
+    <input type="text" id="price" name="price">
     <div class='buttons'>
       <input type="submit" value="Submit" class='submit'>
       <input type="reset" value="Reset" class='reset'>
     </div>
   </form>
-
+  <h1>Top 25 stocks in the S&P 500</h1>
   <div class='stock-info'>
     <header>
       <div class='stock-info__name-header'>Name <span>(use ctrl + f)</span></div>
       <div class='stock-info__symbol-header'>Symbol</div>
     </header>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Apple</div>
+      <div class="stock-info__cell__symbol">AAPL</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Microsoft</div>
+      <div class="stock-info__cell__symbol">MSFT</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Amazon</div>
+      <div class="stock-info__cell__symbol">AMZN</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">TESLA</div>
+      <div class="stock-info__cell__symbol">TSLA</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Alphabet Class A</div>
+      <div class="stock-info__cell__symbol">GOOGL</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Alphabet Class B</div>
+      <div class="stock-info__cell__symbol">GOOG</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">NVIDIA Corporation</div>
+      <div class="stock-info__cell__symbol">NVDA</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Berkshire Hathaway Class B</div>
+      <div class="stock-info__cell__symbol">BRK.B</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Meta</div>
+      <div class="stock-info__cell__symbol">FB</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">UnitedHealth Group</div>
+      <div class="stock-info__cell__symbol">UNH</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Johnson & Johnson</div>
+      <div class="stock-info__cell__symbol">JNJ</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">JPMorgan Chase</div>
+      <div class="stock-info__cell__symbol">JPM</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Visa Class A</div>
+      <div class="stock-info__cell__symbol">V</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Procter & Gamble</div>
+      <div class="stock-info__cell__symbol">PG</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Exxon Mobil</div>
+      <div class="stock-info__cell__symbol">XOM</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Home Depot</div>
+      <div class="stock-info__cell__symbol">HD</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Chevron Corporation</div>
+      <div class="stock-info__cell__symbol">CVX</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Mastercard Inc. Class A</div>
+      <div class="stock-info__cell__symbol">MA</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Bank of America</div>
+      <div class="stock-info__cell__symbol">BAC</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">AbbVie inc.</div>
+      <div class="stock-info__cell__symbol">ABBV</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Pfizer</div>
+      <div class="stock-info__cell__symbol">PFE</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Broadcom Inc.</div>
+      <div class="stock-info__cell__symbol">AVGO</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Costco </div>
+      <div class="stock-info__cell__symbol">COST</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Walt Disney</div>
+      <div class="stock-info__cell__symbol">DIS</div>
+    </div>
+    <div class="stock-info__cell">
+      <div class="stock-info__cell__name">Coca-Cola Company</div>
+      <div class="stock-info__cell__symbol">KO</div>
+    </div>
   </div>
-
+  <script src='./portfolio.js'></script>
 </body>
 
 </html>

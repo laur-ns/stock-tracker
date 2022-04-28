@@ -4,6 +4,7 @@ import json
 import requests
 import sys
 
+# this key ran out of credits!
 API_KEY = "sk_b8783e173c464473b9e3a73239e32ba8"
 serverSocket = socket(AF_INET, SOCK_STREAM)
 
@@ -14,8 +15,6 @@ serverSocket.bind(("", serverPort))
 serverSocket.listen(5)
 print('The server is running')
 
-
-# Server should be up and running and listening to the incoming connections
 
 # Extract the given header value from the HTTP request message
 def getHeader(message, header):
@@ -65,21 +64,17 @@ def default(message):
 
 # ---------- PORTFOLIO FUNCTIONS ----------
 
+
 # updates gain/loss using api endpoint.
-
-
 def update_gain_loss():
     with open("portfolio.json", "r") as file:
         data = json.load(file)
-        for index, symbol in enumerate(data["Stocks"]):
+        for symbol in data["Stocks"]:
             try:
                 response = requests.get(
                     f"https://cloud.iexapis.com/stable/stock/{symbol['Name']}/quote?token={API_KEY}").json()
             except:
-                # if it throws an error, it likely means the symbol doesn't exist, so delete it from json file
-                # in reality the server might just be down and it would end up falsely deleting the stock
-                print('[ERROR]: symbol not found, deleting symbol...')
-                data["Stocks"].pop(index)
+                # if it throws an error, use the last gain/loss stored in server
                 continue
             latest_quote = response["latestPrice"]
             gain_or_loss = (
@@ -100,8 +95,19 @@ def validate_input(input):
         return False
     try:
         quantity = int(s[1].split("=")[1])
-        price = float(s[2].split("=")[1])
     except:
+        return False
+    try:
+        price = float(s[2].split("=")[1])
+        if price <= 0:
+            # price is anumber, make sure its greater than zero
+            return False
+    except:
+        # price is not a number, check if it's an empty string
+        if s[2].split("=")[1] != "":
+            return False
+    # make sure quantity is not zero
+    if quantity == 0:
         return False
     return True
 
@@ -121,13 +127,25 @@ def add_to_portfolio(input):
         for index, symbol in enumerate(data["Stocks"]):
             if symbol["Name"] == name:  # can only reduce/remove
                 is_new_stock = False
-                if quantity < 0:  # turn it positive and subtract quantity
-                    quantity *= -1
-                symbol["Quantity"] -= quantity
-            if symbol["Quantity"] == 0:
+                if symbol["Quantity"] + quantity < 0:  # prevent short selling
+                    return "<script>alert('[ERRROR] No short-selling!')</script>"
+                elif quantity < 0:
+                    # ignore price, only change quantity
+                    symbol["Quantity"] += quantity
+                else:
+                    # quantity is positive, add it with new price
+                    old_quantity = symbol["Quantity"]
+                    old_price = symbol["Price"]
+                    symbol["Quantity"] += quantity
+                    symbol["Price"] = round((
+                        old_quantity * old_price + quantity * price) / (old_quantity + quantity), 2)
+            if symbol["Quantity"] == 0:  # remove from portfolio
                 data["Stocks"].pop(index)
 
         if is_new_stock is True:
+            # price should not be empty for a new stock
+            if price == "":
+                return "<script>alert('[ERRROR] Price must have a value for new stock')</script>"
             new_stock = {
                 "Name": name,
                 "Quantity": int(quantity),
@@ -139,16 +157,20 @@ def add_to_portfolio(input):
         json_data = json.dumps(data)
     with open("portfolio.json", "w") as outfile:
         outfile.write(json_data)
+    return ""
 
 
 def portfolio(message):
     try:
         form_input = message.split()[-1]
         # if invalid input, do nothing with the input, continue updating gain/loss
+        body = open("portfolio.html", "r").read()
         if "stocksymbol" in form_input and validate_input(form_input):
-            add_to_portfolio(form_input)
+            # if user attempts to short sell the body will contain an
+            # alert script to prevent it
+            body += add_to_portfolio(form_input)
+        body = body.encode()
         update_gain_loss()
-        body = open("portfolio.html", "r").read().encode()
         header = ("HTTP/1.1 200 OK\r\n\r\n").encode()
     except IOError:
         # Send HTTP response message for resource not found
@@ -179,6 +201,7 @@ def get_stock_data(message):
         # append both in a single list and return with each data in
         # their corresponding indices
         stock_data = []
+        print(form_input)
         stock_data.append(requests.get(
             f"https://cloud.iexapis.com/stable/stock/{form_input}/stats?token={API_KEY}").json())
         chart_data = requests.get(
